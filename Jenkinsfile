@@ -8,13 +8,6 @@ pipeline {
       }
     }
 
-    stage('test') {
-      steps {
-        echo 'test maven app'
-        sh 'mvn clean test'
-      }
-    }
-
     stage('package') {
       steps {
         echo 'package maven app'
