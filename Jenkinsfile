@@ -26,6 +26,7 @@ pipeline {
     }
 
     stage('package and buildnPublish') {
+      parallel {
       when {
           branch "master"
       }
@@ -54,6 +55,7 @@ pipeline {
             }
           }
         }
+      }
       }
     }
   }
