@@ -25,8 +25,10 @@ pipeline {
       }
     }
 
-    node { 
       stage('package') {
+        when {
+          branch "master"
+        }
         agent {
           docker {
             image 'maven:3.6.3-jdk-11-slim'
@@ -42,9 +44,7 @@ pipeline {
           }
         }
       }
-    }
 
-    node {
       stage('Docker BnP') {
         agent any
         steps {
@@ -61,7 +61,6 @@ pipeline {
               echo 'I execute elsewhere'
           }
         }
-      }
     }
   }
 }
