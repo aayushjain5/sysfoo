@@ -1,5 +1,4 @@
 node {
-  stages {
     stage('build') {
       agent {
         docker {
@@ -60,10 +59,6 @@ node {
               echo 'I execute elsewhere'
           }
         }
-    }
-
-  }
-  tools {
-    maven 'Maven 3.6.3'
+      }
   }
 }
