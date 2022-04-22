@@ -1,4 +1,4 @@
-pipeline {
+node {
   agent none
   stages {
     stage('build') {
@@ -27,7 +27,6 @@ pipeline {
       }
     }
 
-    node {
       stage('package') {
         agent {
           docker {
@@ -44,10 +43,8 @@ pipeline {
               echo 'I execute elsewhere'
           }
         }
-      }
     }
 
-    node {
       stage('Docker BnP') {
         agent any
         steps {
@@ -64,7 +61,6 @@ pipeline {
               echo 'I execute elsewhere'
           }
         }
-      }
     }
 
   }
