@@ -27,10 +27,10 @@ pipeline {
 
     stage('package and buildnPublish') {
       parallel {
-      when {
-          branch "master"
-      }
       stage('Create Jar file') { 
+        when {
+          branch "master"
+        }
         agent {
           docker {
             image 'maven:3.6.3-jdk-11-slim'
@@ -44,6 +44,9 @@ pipeline {
       }       
 
       stage('Docker BnP') {
+        when {
+          branch "master"
+        }
         agent any
         steps {
           script {
