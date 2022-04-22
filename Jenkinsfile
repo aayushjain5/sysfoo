@@ -25,7 +25,7 @@ pipeline {
       }
     }
 
-    stage('package and buildnPublish) {
+    stage('package and buildnPublish') {
       when {
           branch "master"
       }
