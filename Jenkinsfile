@@ -25,34 +25,33 @@ pipeline {
       }
     }
 
-    stage('package') {
+    stage('package and buildnPublish) {
       when {
-        branch "master"
+          branch "master"
       }
-      agent {
-        docker {
-          image 'maven:3.6.3-jdk-11-slim'
+      stage('Create Jar file') { 
+        agent {
+          docker {
+            image 'maven:3.6.3-jdk-11-slim'
+          }
         }
-      }
-      steps {
-        echo 'package maven app'
-        sh 'mvn package -DskipTests'
-        archiveArtifacts '**/*.war'
-      }
-    }
+        steps {
+          echo 'package maven app'
+          sh 'mvn package -DskipTests'
+          archiveArtifacts '**/*.war'
+        }
+      }       
 
-    stage('Docker BnP') {
-      when {
-        branch "master"
-      }
-      agent any
-      steps {
-        script {
-          docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
-            def dockerImage = docker.build("aayushjain5/sysfoo:v${env.BUILD_ID}", "./")
-            dockerImage.push()
-            dockerImage.push("latest")
-            dockerImage.push("dev")
+      stage('Docker BnP') {
+        agent any
+        steps {
+          script {
+            docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
+              def dockerImage = docker.build("aayushjain5/sysfoo:v${env.BUILD_ID}", "./")
+              dockerImage.push()
+              dockerImage.push("latest")
+              dockerImage.push("dev")
+            }
           }
         }
       }
